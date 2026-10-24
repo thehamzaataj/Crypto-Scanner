@@ -1,0 +1,9 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+body{@apply bg-ink text-slate-200 font-sans antialiased}
+html:not(.dark) body{@apply bg-slate-100 text-slate-900}
+.glass{@apply rounded-xl border border-line bg-panel/70 backdrop-blur}
+html:not(.dark) .glass{@apply bg-white/80 border-slate-200}
+.num{@apply font-mono tabular-nums}
+.btn{@apply rounded-lg border border-line px-3 py-1.5 text-sm hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-up}
+@keyframes pulse-dot{50%{opacity:.35}} .live{animation:pulse-dot 2s infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
