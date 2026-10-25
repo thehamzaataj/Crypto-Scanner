@@ -23,6 +23,7 @@ f = lambda v: float(v) if pd.notna(v) else 0.0
 grade = lambda n: "Strong Buy" if n >= 85 else "Buy" if n >= 70 else "Watch" if n >= 55 else "Neutral"
 def init_sem(): SEM.clear(); SEM.update({"Binance": asyncio.Semaphore(6), "OKX": asyncio.Semaphore(3), "Bybit": asyncio.Semaphore(6), "KuCoin": asyncio.Semaphore(4)})
 
+
 # ---------- storage (Upstash Redis REST, or memory) ----------
 async def rcmd(*cmd):
     async with httpx.AsyncClient(timeout=20) as c:
@@ -275,7 +276,15 @@ async def coin(symbol: str):
 
 @app.get("/api/market-status")
 async def market(): return {**(await get_snap())["market"], "lastLiveTime": datetime.now(timezone.utc).isoformat()}
+@app.get("/api/test-redis")
+async def test_redis():
+    await kv_set("test_key", "redis_working")
+    value = await kv_get("test_key")
 
+    return {
+        "value": value,
+        "redis_enabled": bool(RURL)
+    }
 @app.get("/api/strategy")
 def strategy():
     return {"name": "Trend Following (1D trend, 4H/1D entry)", "params": CFG, "weights": {"Trend": 30, "Pullback quality": 20, "RSI": 15, "Volume": 15, "Momentum/ADX": 10, "Market regime": 10},
