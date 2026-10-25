@@ -26,7 +26,7 @@ export default function Strategy() {
       <Card title="Scan with Trend Following">
         <div className="flex flex-wrap items-end gap-3 text-sm">
           {([['topN', 'Coins to scan (max 250)'], ['adxMin', 'ADX min'], ['minRR', 'Min R:R'], ['minScore', 'Min score']] as const).map(([k, l]) => <label key={k} className="grid gap-1 text-xs text-slate-400">{l}<input type="number" className={inp} value={p[k]} onChange={e => setP({ ...p, [k]: +e.target.value })} /></label>)}
-          <button className="btn flex items-center gap-1.5 bg-up/20 text-up" disabled={s?.running || run.isPending} onClick={() => run.mutate()}><Play size={14} />{s?.running ? 'Scanning…' : 'Scan now'}</button>
+          <button className="btn flex items-center gap-1.5 bg-up/20 text-up" disabled={s?.running || run.isPending} onClick={() => run.mutate()}><Play size={14} />{s?.running || run.isPending ? 'Scanning… (up to 2 min)' : 'Scan now'}</button>
         </div>
         {run.isError && <p role="alert" className="mt-2 text-sm text-down">Could not start the scan. A scan may already be running.</p>}
         {s?.running && <div className="mt-3"><div className="h-2 overflow-hidden rounded bg-line"><div className="h-full bg-up transition-all" style={{ width: `${pct}%` }} /></div><div className="num mt-1 text-xs text-slate-400">{s.done} / {s.total} coins · {pct}%</div></div>}

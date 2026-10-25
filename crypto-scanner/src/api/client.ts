@@ -20,7 +20,7 @@ const need = () => Promise.reject(new Error('This page needs the real backend: s
 export const api2 = {
   heatmap: (p: object): Promise<import('../types').HeatResp> => (USE_MOCK ? need() : get('/api/rsi-heatmap', p)),
   strategy: (): Promise<import('../types').StrategyInfo> => (USE_MOCK ? need() : get('/api/strategy')),
-  scan: (body: object) => (USE_MOCK ? need() : http.post('/api/scan', body).then(r => r.data)),
+  scan: (body: object) => (USE_MOCK ? need() : http.post('/api/scan', body, { timeout: 300000 }).then(r => r.data)),
   scanStatus: (): Promise<import('../types').ScanStatus> => (USE_MOCK ? need() : get('/api/scan/status')),
   scans: (): Promise<import('../types').ScanRow[]> => (USE_MOCK ? need() : get('/api/scans')),
 }

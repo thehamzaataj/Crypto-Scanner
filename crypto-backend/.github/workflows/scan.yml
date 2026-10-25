@@ -1,0 +1,10 @@
+name: scan
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -fsS -m 290 "${{ secrets.BACKEND_URL }}/api/cron?key=${{ secrets.CRON_SECRET }}"
