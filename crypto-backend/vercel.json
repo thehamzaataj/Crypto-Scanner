@@ -1,12 +1,10 @@
 {
-  "rewrites": [
-    {
   "functions": {
     "api/index.py": {
       "maxDuration": 300
     }
   },
-  "regions": ["fra1"]
-   }
-  }
+  "regions": [
+    "fra1"
+  ]
 }
