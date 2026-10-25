@@ -8,4 +8,4 @@ export const usePerf = () => useQuery({ queryKey: ['perf'], queryFn: api.perf, .
 export const useList = (kind: 'signals' | 'coins', p: ListParams) => useQuery({ queryKey: [kind, p], queryFn: () => api[kind](p), ...useOpts() })
 export const useCoin = (sym: string | null) => useQuery({ queryKey: ['coin', sym], queryFn: () => api.coin(sym!), enabled: !!sym })
 export const useWatchlist = () => useQuery({ queryKey: ['watchlist'], queryFn: api.watchlist, ...useOpts() })
-export const useWatchToggle = () => { const qc = useQueryClient(); return useMutation({ mutationFn: ({ symbol, on }: { symbol: string; on: boolean }) => (on ? api.addWatch(symbol) : api.delWatch(symbol)), onSuccess: () => qc.invalidateQueries({ queryKey: ['watchlist'] }) }) }
+export const useWatchToggle = () => { const qc = useQueryClient(); return useMutation({ mutationFn: async ({ symbol, on }: { symbol: string; on: boolean }) => { await (on ? api.addWatch(symbol) : api.delWatch(symbol)) }, onSuccess: () => qc.invalidateQueries({ queryKey: ['watchlist'] }) }) }
