@@ -9,6 +9,5 @@
     "api/index.py": {
       "maxDuration": 300
     }
-  },
-  "regions": ["fra1"]
+  }
 }
