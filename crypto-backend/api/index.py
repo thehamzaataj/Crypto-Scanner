@@ -249,7 +249,11 @@ def listing(rows, a):
         r = list(best.values())
     r.sort(key=lambda s: -s["marketCap"] if a["sort"] == "marketCap" else -s["volume24h"] if a["sort"] == "volume" else -s["score"])
     return {"items": r[(a["page"] - 1) * a["limit"]: a["page"] * a["limit"]], "total": len(r), "page": a["page"], "limit": a["limit"]}
-
+@app.get("/")
+def home():
+    return {
+        "message": "Crypto Scanner API Running"
+    }
 @app.get("/api/coins")
 async def coins(page: int = 1, limit: int = 50, search: str = "", signal: str = "", minMarketCap: float | None = None, minVolume: float | None = None, exchange: str = "", sort: str = "score", timeframe: str = "", confirmedOnly: bool = False, rsiTf: str = "", rsiMin: float | None = None, rsiMax: float | None = None):
     return listing((await get_snap())["rows"], locals())
